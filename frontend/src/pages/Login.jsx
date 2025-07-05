@@ -23,7 +23,7 @@ export default function Login() {
             label="Email"
             name="email"
             register={register}
-            rules={{ required: "Email is required" }}
+            
           />
           
           <Input
@@ -31,7 +31,7 @@ export default function Login() {
             name="password"
             type="password"
             register={register}
-            rules={{ required: "Password is required" }}
+        
           />
           
           <Button>Login</Button>
