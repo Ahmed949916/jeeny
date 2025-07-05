@@ -1,11 +1,17 @@
-export default function Button({ type = "submit", children, onClick, className = "" }) {
+import Button from '@mui/material/Button';
+
+export default function MuiButton({ type = "submit", children, onClick, className = "" }) {
   return (
-    <button
+    <Button
       type={type}
       onClick={onClick}
-      className={`w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 ${className}`}
+      variant="contained"
+      color="primary"
+      fullWidth
+      className={className}
+      sx={{ py: 1.5, mt: 1 }}
     >
       {children}
-    </button>
+    </Button>
   );
 }

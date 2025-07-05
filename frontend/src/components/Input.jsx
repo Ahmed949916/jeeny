@@ -1,13 +1,15 @@
+import TextField from '@mui/material/TextField';
+
 export default function Input({ label, name, register, rules = {}, type = "text" }) {
   return (
-    <div className="mb-4">
-      {label && <label className="block mb-2 font-medium">{label}</label>}
-      <input
-        type={type}
-        {...register(name, rules)}
-        className="w-full"
-      />
-      
-    </div>
+    <TextField
+      label={label}
+      name={name}
+      type={type}
+      {...register(name, rules)}
+      fullWidth
+      margin="normal"
+      variant="outlined"
+    />
   );
 }
