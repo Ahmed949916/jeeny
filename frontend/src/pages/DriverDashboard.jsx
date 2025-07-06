@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import {  useEffect, useState } from 'react';
 import {
   Box,
   Typography,
@@ -8,11 +8,14 @@ import {
   Divider,
   CircularProgress
 } from '@mui/material';
+import { useAuth } from '../context/AuthContext';
+import LocationInfoBox from '../components/LocationInfo';
 
 const DriverDashboard = () => {
   const [rides, setRides] = useState([]);
   const [loading, setLoading] = useState(true);
-
+ const { user }=  useAuth();
+  
   const fetchRides = async () => {
     try {
       const res = await fetch('http://localhost:5000/api/rides');
@@ -24,18 +27,32 @@ const DriverDashboard = () => {
       setLoading(false);
     }
   };
+const handleStart = async (rideId) => {
+  try {
+    const res = await fetch(`http://localhost:5000/api/rides/${rideId}/start`, {
+      method: 'PUT',
+    });
+
+    const result = await res.json();
+    if (result.success) {
+      fetchRides();
+    }
+  } catch (error) {
+    console.error('Start failed:', error);
+  }
+};
 
   const handleAccept = async (rideId) => {
     try {
       const res = await fetch(`http://localhost:5000/api/rides/${rideId}/accept`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ driver_email: "captain@example.com" })  // Ideally get from context
+        body: JSON.stringify({ driver_email: user.email })  
       });
 
       const result = await res.json();
       if (result.success) {
-        fetchRides(); // Refresh list
+        fetchRides();  
       }
     } catch (error) {
       console.error('Accept failed:', error);
@@ -58,8 +75,15 @@ const DriverDashboard = () => {
   };
 
   useEffect(() => {
-    fetchRides();
+    fetchRides();  
+
+    const interval = setInterval(() => {
+      fetchRides();
+    }, 3000);
+
+    return () => clearInterval(interval);  
   }, []);
+
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto', p: 3 }}>
@@ -74,32 +98,28 @@ const DriverDashboard = () => {
           <Paper key={ride._id} elevation={2} sx={{ p: 2, mb: 3, borderRadius: 2, bgcolor: "#232323" }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
               <Typography variant="h6">{ride.passenger_email}</Typography>
-              <Chip
-                label={ride.status}
-                sx={{
-                  textTransform: 'capitalize',
-                  bgcolor:
-                    ride.status === 'completed'
-                      ? 'success.main'
-                      : ride.status === 'in-progress'
-                      ? 'warning.main'
-                      : 'grey.600',
-                  color: 'white'
-                }}
-              />
+              <Chip label={ride.ride_type} sx={{ textTransform: 'capitalize', bgcolor: 'primary.main', color: 'white' }} />
+             <Chip
+  label={ride.status}
+  sx={{
+    textTransform: 'capitalize',
+    bgcolor:
+      ride.status === 'completed'
+        ? 'success.main'
+        : ride.status === 'in-progress'
+        ? 'warning.main'
+        : ride.status === 'accepted'
+        ? 'info.main'
+        : 'grey.600',
+    color: 'white'
+  }}
+/>
+
             </Box>
 
             <Divider sx={{ my: 1 }} />
-
-            <Box sx={{ mb: 1 }}>
-              <Typography variant="body2" color="text.secondary">Pickup</Typography>
-              <Typography>{ride.pickup_location}</Typography>
-            </Box>
-
-            <Box sx={{ mb: 2 }}>
-              <Typography variant="body2" color="text.secondary">Dropoff</Typography>
-              <Typography>{ride.drop_location}</Typography>
-            </Box>
+            <LocationInfoBox pickup={ride.pickup_location} dropoff={ride.drop_location} />
+   
 
             {ride.status === 'requested' && (
               <Button
@@ -110,6 +130,16 @@ const DriverDashboard = () => {
                 Accept Ride
               </Button>
             )}
+{ride.status === 'accepted'&&  (
+  <Button
+    variant="contained"
+    color="warning"
+    onClick={() => handleStart(ride._id)}
+    fullWidth
+  >
+    Start Ride
+  </Button>
+)}
 
             {ride.status === 'in-progress' && (
               <Button

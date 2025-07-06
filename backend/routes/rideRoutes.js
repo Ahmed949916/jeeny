@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const { ObjectId } = require("mongodb");
 
- router.get("/:id", async (req, res) => {
+ 
+router.get("/:id", async (req, res) => {
   const rideId = req.params.id;
   try {
     const ride = await req.db.collection("rides").findOne({ _id: new ObjectId(rideId) });
@@ -12,6 +13,7 @@ const { ObjectId } = require("mongodb");
     res.status(500).json({ error: "Failed to fetch ride details" });
   }
 });
+
  
 router.get("/", async (req, res) => {
   try {
@@ -19,13 +21,13 @@ router.get("/", async (req, res) => {
       .collection("rides")
       .find({ status: { $ne: "completed" } })
       .toArray();
-
     res.json({ rides });
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch rides" });
   }
 });
 
+ 
 router.post("/", async (req, res) => {
   const { passenger_email, pickup_location, drop_location, ride_type } = req.body;
   try {
@@ -46,37 +48,55 @@ router.post("/", async (req, res) => {
 });
 
  
-router.get("/requested", async (req, res) => {
-  try {
-    const rides = await req.db.collection("rides").find({ status: "requested" }).toArray();
-    res.json(rides);
-  } catch (err) {
-    res.status(500).json({ error: "Failed to fetch rides" });
-  }
-});
-
- 
 router.put("/:id/accept", async (req, res) => {
   const rideId = req.params.id;
   const { driver_email } = req.body;
   try {
-    await req.db.collection("rides").updateOne(
+    const result = await req.db.collection("rides").updateOne(
       { _id: new ObjectId(rideId), status: "requested" },
-      { $set: { driver_email, status: "in-progress" } }
+      { $set: { driver_email, status: "accepted" } }
     );
+
+    if (result.modifiedCount === 0) {
+      return res.status(400).json({ success: false, message: "Ride not found or already accepted" });
+    }
+
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: "Failed to accept ride" });
   }
 });
 
+
+router.put("/:id/start", async (req, res) => {
+  const rideId = req.params.id;
+  try {
+    const result = await req.db.collection("rides").updateOne(
+      { _id: new ObjectId(rideId), status: "accepted" },
+      { $set: { status: "in-progress" } }
+    );
+
+    if (result.modifiedCount === 0) {
+      return res.status(400).json({ success: false, message: "Ride not found or not accepted" });
+    }
+
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to start ride" });
+  }
+});
+
+ 
 router.put("/:id/complete", async (req, res) => {
   const rideId = req.params.id;
   try {
-    await req.db.collection("rides").updateOne(
+    const result = await req.db.collection("rides").updateOne(
       { _id: new ObjectId(rideId), status: "in-progress" },
       { $set: { status: "completed" } }
     );
+
+   
+
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: "Failed to complete ride" });
