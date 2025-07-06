@@ -152,11 +152,9 @@ mini-ride-booking/
 
 ## Assumptions 📝
 
-1. Simplified authentication without password hashing
-2. Text-based locations instead of geocoordinates
-3. Polling mechanism for ride status updates (no WebSockets)
-4. No payment integration
-5. No rating system
+1. Fake Auth for demo 
+2. Polling mechanism for ride status updates (no WebSockets)
+3. 1 Ride at a time.
 
 ## Future Enhancements 🔮
 
