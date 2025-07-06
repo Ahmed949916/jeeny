@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
-import { Container, Box, Typography } from '@mui/material';
+import { Container, Box, Typography ,Link} from '@mui/material';
 
 export default function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -35,7 +35,17 @@ export default function Login() {
           />
           
           <Button>Login</Button>
+
         </form>
+        <Typography variant="body2" align="center" sx={{ mt: 2 }}>
+          Don't have an account? <Link 
+            href="/register" 
+            
+          >
+            Register
+          </Link>
+        </Typography>
+       
       </Box>
     </Container>
   );
