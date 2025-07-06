@@ -155,6 +155,7 @@ mini-ride-booking/
 1. Fake Auth for demo 
 2. Polling mechanism for ride status updates (no WebSockets)
 3. 1 Ride at a time.
+   
 
 ## Future Enhancements 🔮
 
@@ -168,5 +169,19 @@ mini-ride-booking/
 - Ride Cancellation
 
  
- 
+ ## Screenshots
+ 1. Dashboard for user on left side and captain on right side.
+    ![image](https://github.com/user-attachments/assets/c2402fff-34bf-4845-bb45-b2cb3a1bb2ac)
+ 2. Ride Request generated which will be shown to available captains.
+    ![image](https://github.com/user-attachments/assets/162e6e67-881b-4da2-9d07-187f751bb6da)
+ 3. When a driver accepts, starts or finish a ride , user's screen is updated using polling.
+    ![image](https://github.com/user-attachments/assets/1cd31b59-40a3-4440-a468-8f77e448c156)
+    ![image](https://github.com/user-attachments/assets/2b1a82d2-358a-4288-84e6-480aa0f8dc1b)
+    ![image](https://github.com/user-attachments/assets/7e84e91a-0acc-4e92-a71a-4cf87fe16dd0)
+4. Ride History is hard coded as of now, can be inttegrated easily with database.
+    ![image](https://github.com/user-attachments/assets/1ce6a581-d20d-421b-9daf-d94faee002f0)
+
+
+
+
 
