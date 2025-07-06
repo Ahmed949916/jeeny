@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
  
 import { 
-  Container, 
+   
    ToggleButton, ToggleButtonGroup,
   Box, 
   Typography, 
@@ -19,9 +19,14 @@ export default function RideRequest() {
   
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+     e.preventDefault();
     console.log({ pickup, dropoff, vehicle });
-    navigate('/ride-status');
+    navigate('/ride-status',{state: { 
+        pickupLocation: pickup,
+        dropoffLocation: dropoff,
+         
+      } });
   };
 
   return (
