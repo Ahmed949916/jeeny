@@ -32,14 +32,8 @@ export default function Register() {
   };
 
   return (
-    <Container maxWidth="xs">
-      <Box sx={{ 
-        mt: 8,
-        p: 4,
-        boxShadow: 3,
-        borderRadius: 2,
-        bgcolor: 'background.paper'
-      }}>
+  
+     <Box sx={{ mt: 4, p: 3, boxShadow: 1, borderRadius: 2 ,maxWidth:600, mx: 'auto'}}>
         <Typography variant="h5" component="h1" align="center" gutterBottom>
           Create Account
         </Typography>
@@ -100,6 +94,6 @@ export default function Register() {
           </Link>
         </Typography>
       </Box>
-    </Container>
+    
   );
 }
