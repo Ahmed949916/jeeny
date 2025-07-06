@@ -27,7 +27,7 @@ const rideHistory = [
 function RideHistory() {
   return (
     <Box sx={{ maxWidth: 600, mx: 'auto', p: 3 }}>
-      <Typography variant="h5" gutterBottom align="center">
+      <Typography variant="h4" gutterBottom align="center">
         Ride History
       </Typography>
 

@@ -3,7 +3,7 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 import { 
-  Container, 
+ 
   Box, 
   Typography, 
   ToggleButton, 
@@ -12,20 +12,22 @@ import {
 } from '@mui/material';
  
 import { useState } from 'react';
+import { useAuth } from "../context/AuthContext";
 
 export default function Register() {
   const { 
     register, 
-    handleSubmit, 
-    formState: { errors } 
+    handleSubmit
   } = useForm();
+  const { login } = useAuth();
   const [userType, setUserType] = useState('rider');
   const navigate = useNavigate();
   
   const onSubmit = (data) => {
-    console.log({ ...data, userType });
-    navigate("/request-ride");
-  };
+  const userData = { name: data.name, email: data.email, userType };
+  login("dummy-token", userData);
+  navigate(userType === "captain" ? "/driver" : "/request-ride");
+};
 
   const handleUserTypeChange = (event, newType) => {
     if (newType) setUserType(newType);
@@ -34,7 +36,7 @@ export default function Register() {
   return (
   
      <Box sx={{ mt: 4, p: 3, boxShadow: 1, borderRadius: 2 ,maxWidth:600, mx: 'auto'}}>
-        <Typography variant="h5" component="h1" align="center" gutterBottom>
+        <Typography variant="h4"  align="center" gutterBottom>
           Create Account
         </Typography>
         

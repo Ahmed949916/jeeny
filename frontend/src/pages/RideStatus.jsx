@@ -180,7 +180,7 @@ const RideStatus = () => {
             variant="contained"
             fullWidth
             onClick={() => {
-              alert('Ride completed!');
+              
               navigate('/request-ride');
             }}
           >

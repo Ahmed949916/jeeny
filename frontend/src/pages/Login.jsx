@@ -15,7 +15,7 @@ export default function Login() {
   return (
      
        <Box sx={{ mt: 4, p: 3, boxShadow: 1, borderRadius: 2 ,maxWidth:600, mx: 'auto'}}>
-        <Typography variant="h5" component="h2" align="center" gutterBottom>
+        <Typography variant="h4"   align="center" gutterBottom>
           Login
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
