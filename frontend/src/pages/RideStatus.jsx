@@ -9,13 +9,13 @@ import {
   Avatar,
   Button,
   Divider,
-  Stack
+ 
 } from '@mui/material';
 import {
-  DirectionsCar,
+  
   Schedule,
   PersonPinCircle,
-  DirectionsRun,
+ 
   DoneAll
 } from '@mui/icons-material';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -23,7 +23,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const statusSteps = [
   { label: 'Requested', icon: <Schedule /> },
   { label: 'Accepted', icon: <PersonPinCircle /> },
-   
   { label: 'Completed', icon: <DoneAll /> }
 ];
 
