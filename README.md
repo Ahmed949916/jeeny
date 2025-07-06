@@ -178,7 +178,7 @@ mini-ride-booking/
     ![image](https://github.com/user-attachments/assets/1cd31b59-40a3-4440-a468-8f77e448c156)
     ![image](https://github.com/user-attachments/assets/2b1a82d2-358a-4288-84e6-480aa0f8dc1b)
     ![image](https://github.com/user-attachments/assets/7e84e91a-0acc-4e92-a71a-4cf87fe16dd0)
-4. Ride History is hard coded as of now, can be inttegrated easily with database.
+4. Ride History is hard coded as of now, can be integrated easily with database.
     ![image](https://github.com/user-attachments/assets/1ce6a581-d20d-421b-9daf-d94faee002f0)
 
 
